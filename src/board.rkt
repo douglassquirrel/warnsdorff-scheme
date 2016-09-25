@@ -1,31 +1,10 @@
 #lang racket/base
 
-(require racket/list
+(require "diary.rkt"
          "square.rkt"
          "util.rkt")
 
 (provide new-board current legal-moves visited? move-to degree tour-over?)
-
-(define (new-diary width height)
-  (define (to-index sq)
-    (+ (* width (square-y sq)) (square-x sq)))
-  (define visited-list
-    (make-list (* width height) #f))
-  (cons to-index visited-list))
-
-(define (to-index D)
-  (car D))
-
-(define (visited-list D)
-  (cdr D))
-
-(define (visit sq D)
-  (cons
-    (to-index D)
-    (list-set (visited-list D) ((to-index D) sq) #t)))
-
-(define (visited-diary? sq D)
-  (list-ref (visited-list D) ((to-index D) sq)))
 
 (define (new-board width height start)
   (define D
@@ -41,7 +20,7 @@
 (define (current B)
   (caddr B))
 
-(define (diary B)
+(define (board-diary B)
   (cadddr B))
 
 (define (inbounds? sq B)
@@ -50,7 +29,7 @@
     (between? (square-y sq) 0 (sub1 (height B)))))
 
 (define (visited? sq B)
-  (visited-diary? sq (diary B)))
+  (visited-diary? sq (board-diary B)))
 
 (define (legal? sq B)
   (and (inbounds? sq B) (not (visited? sq B))))
@@ -63,7 +42,7 @@
     (width B)
     (height B)
     sq
-    (visit sq (diary B))))
+    (visit sq (board-diary B))))
 
 (define (degree sq B)
   (length (legal-moves sq B)))
