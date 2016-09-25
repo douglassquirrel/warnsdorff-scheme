@@ -1,7 +1,8 @@
 #lang racket/base
 
-(require "square.rkt")
-(require "util.rkt")
+(require racket/list
+         "square.rkt"
+         "util.rkt")
 
 (provide new-board current legal-moves visited? move-to degree tour-over?)
 
@@ -9,7 +10,7 @@
   (define (to-index sq)
     (+ (* width (y-coord sq)) (x-coord sq)))
   (define visited-list
-    (list-fill #f (* width height)))
+    (make-list (* width height) #f))
   (cons to-index visited-list))
 
 (define (to-index D)
@@ -21,7 +22,7 @@
 (define (visit sq D)
   (cons
     (to-index D)
-    (list-set ((to-index D) sq) (visited-list D) #t)))
+    (list-set (visited-list D) ((to-index D) sq) #t)))
 
 (define (visited-diary? sq D)
   (list-ref (visited-list D) ((to-index D) sq)))
@@ -55,8 +56,7 @@
   (and (inbounds? sq B) (not (visited? sq B))))
 
 (define (legal-moves sq B)
-  (filter (moves-from sq) (lambda (s)
-    (legal? s B))))
+  (filter (lambda (s) (legal? s B)) (moves-from sq)))
 
 (define (move-to sq B)
   (list

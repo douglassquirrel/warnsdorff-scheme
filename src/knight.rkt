@@ -17,8 +17,7 @@
   (define min-degree
     (apply min degrees))
   (define w-moves
-    (filter all-moves (lambda (s)
-      (= min-degree (degree s B)))))
+    (filter (lambda (s) (= min-degree (degree s B))) all-moves))
   (move-to (car w-moves) B))
 
 (define (tour B)
