@@ -1,9 +1,17 @@
 #lang racket/base
 
-(require "knight.rkt" "board.rkt" "square.rkt")
+(require racket/cmdline
+         racket/string
+         "board.rkt"
+         "knight.rkt"
+         "square.rkt")
 
-(define B (new-board 15 15 (square 0 0)))
+(define size (command-line #:args (size) (string->number size)))
+
+(define num-squares (* size size))
+(define B (new-board size size (square 0 0)))
 (define T (tour B))
-(for-each (lambda (sq) (display (square-format sq))) T)
-(newline)
-(println (length T))
+(displayln (string-join (map square-format T)))
+(if (= (length T) num-squares)
+  (printf "Successfully visited all ~a squares.\n" num-squares)
+  (printf "Failed - visited only ~a of ~a squares.\n" (length T) num-squares))
