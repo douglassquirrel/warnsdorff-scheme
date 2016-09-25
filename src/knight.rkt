@@ -1,15 +1,16 @@
 #lang racket/base
 
-(require "board.rkt" "util.rkt")
+(require "board.rkt"
+         "util.rkt")
 
 (provide tour)
 
 (define (move-simple B)
-  (move-to (car (legal-moves (current B) B)) B))
+  (move-to (car (legal-moves (board-current B) B)) B))
 
 (define (move-warnsdorff-simple B)
   (define all-moves
-    (legal-moves (current B) B))
+    (legal-moves (board-current B) B))
   (define degrees
     (map (lambda (s)
       (degree s B))
@@ -21,4 +22,4 @@
   (move-to (car w-moves) B))
 
 (define (tour B)
-  (unfold current move-warnsdorff-simple B tour-over?))
+  (unfold board-current move-warnsdorff-simple B tour-over?))

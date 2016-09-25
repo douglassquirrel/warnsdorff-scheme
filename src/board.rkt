@@ -1,51 +1,41 @@
 #lang racket/base
 
-(require "diary.rkt"
+(require racket/function
+         "diary.rkt"
          "square.rkt"
          "util.rkt")
 
-(provide new-board current legal-moves visited? move-to degree tour-over?)
+(provide new-board board-current legal-moves visited? move-to degree tour-over?)
+
+(struct board (width height current diary))
 
 (define (new-board width height start)
-  (define D
-    (new-diary width height))
-  (list width height start (visit start D)))
-
-(define (width B)
-  (car B))
-
-(define (height B)
-  (cadr B))
-
-(define (current B)
-  (caddr B))
-
-(define (board-diary B)
-  (cadddr B))
+  (define D (new-diary width height))
+  (board width height start (visit start D)))
 
 (define (inbounds? sq B)
   (and
-    (between? (square-x sq) 0 (sub1 (width B)))
-    (between? (square-y sq) 0 (sub1 (height B)))))
+    (between? (square-x sq) 0 (sub1 (board-width B)))
+    (between? (square-y sq) 0 (sub1 (board-height B)))))
 
 (define (visited? sq B)
   (visited-diary? sq (board-diary B)))
 
+(define unvisited? (negate visited?))
+
 (define (legal? sq B)
-  (and (inbounds? sq B) (not (visited? sq B))))
+  (and (inbounds? sq B) (unvisited? sq B)))
 
 (define (legal-moves sq B)
-  (filter (lambda (s) (legal? s B)) (moves-from sq)))
+  (filter (curryr legal? B) (moves-from sq)))
 
 (define (move-to sq B)
-  (list
-    (width B)
-    (height B)
-    sq
-    (visit sq (board-diary B))))
+  (board (board-width B) (board-height B)
+         sq
+         (visit sq (board-diary B))))
 
 (define (degree sq B)
   (length (legal-moves sq B)))
 
 (define (tour-over? B)
-  (zero? (degree (current B) B)))
+  (zero? (degree (board-current B) B)))
