@@ -8,16 +8,14 @@
 (provide tour)
 
 (define (move-simple B)
-  (move-to (car (legal-moves (board-current B) B)) B))
+  (move-to (car (current-legal-moves B))))
 
 (define (move-warnsdorff B tiebreak)
-  (define all-moves
-    (legal-moves (board-current B) B))
   (define min-degree-moves
-    (car (group-by (curryr degree B) all-moves)))
+    (car (group-by (curryr degree B) (current-legal-moves B))))
   (move-to (tiebreak min-degree-moves) B))
 
 (define move-warnsdorff-simple (curryr move-warnsdorff car))
 
 (define (tour B)
-  (unfold board-current move-warnsdorff-simple B tour-over?))
+  (unfold current-square move-warnsdorff-simple B tour-over?))

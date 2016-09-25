@@ -5,9 +5,10 @@
          "square.rkt"
          "util.rkt")
 
-(provide new-board board-current legal-moves visited? move-to degree tour-over?)
+(provide new-board current-square current-legal-moves degree move-to tour-over?)
 
 (struct board (width height current diary))
+(define current-square board-current)
 
 (define (new-board width height start)
   (define D (new-diary width height))
@@ -28,6 +29,8 @@
 
 (define (legal-moves sq B)
   (filter (curryr legal? B) (moves-from sq)))
+
+(define (current-legal-moves B) (legal-moves (current-square B) B))
 
 (define (move-to sq B)
   (struct-copy board B
