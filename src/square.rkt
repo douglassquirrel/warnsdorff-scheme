@@ -1,3 +1,7 @@
+#lang racket/base
+
+(provide square x-coord y-coord moves-from)
+
 (define (square x y)
   (cons x y))
 

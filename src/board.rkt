@@ -1,5 +1,9 @@
-(load (ts-path "util.scm"))
-(load (ts-path "square.scm"))
+#lang racket/base
+
+(require "square.rkt")
+(require "util.rkt")
+
+(provide new-board current legal-moves visited? move-to degree tour-over?)
 
 (define (new-diary width height)
   (define (to-index sq)

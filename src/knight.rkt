@@ -1,4 +1,8 @@
-(load (ts-path "board.scm"))
+#lang racket/base
+
+(require "board.rkt" "util.rkt")
+
+(provide tour)
 
 (define (move-simple B)
   (move-to (car (legal-moves (current B) B)) B))

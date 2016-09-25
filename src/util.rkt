@@ -1,3 +1,8 @@
+#lang racket/base
+
+(provide identity add1 sub1 nil empty? negate non-empty? foldr foldl unfold
+         unfold-simple range every? filter qsort list-fill list-set between?)
+
 (define (identity x) x)
 
 (define (add1 n)
