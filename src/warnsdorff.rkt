@@ -8,9 +8,10 @@
 
 (define size (command-line #:args (size) (string->number size)))
 
-(define num-squares (* size size))
 (define B (new-board size size (square 0 0)))
 (define T (tour B))
+
+(define num-squares (* size size))
 (displayln (string-join (map square-format T)))
 (if (= (length T) num-squares)
   (printf "Successfully visited all ~a squares.\n" num-squares)
