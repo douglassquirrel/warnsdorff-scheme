@@ -30,9 +30,9 @@
   (filter (curryr legal? B) (moves-from sq)))
 
 (define (move-to sq B)
-  (board (board-width B) (board-height B)
-         sq
-         (visit sq (board-diary B))))
+  (struct-copy board B
+               (current sq)
+               (diary (visit sq (board-diary B)))))
 
 (define (degree sq B)
   (length (legal-moves sq B)))
