@@ -1,23 +1,18 @@
 #lang racket/base
 
-(provide square x-coord y-coord moves-from)
+(require racket/function)
 
-(define (square x y)
-  (cons x y))
+(provide square square-x square-y square-format moves-from)
 
-(define (delta x y)
-  (cons x y))
+(struct square (x y) #:transparent)
+(struct delta (x y))
 
-(define (x-coord s)
-  (car s))
-
-(define (y-coord s)
-  (cdr s))
+(define (square-format sq) (format "[~a,~a]" (square-x sq) (square-y sq)))
 
 (define (apply-delta s d)
   (square
-    (+ (x-coord s) (x-coord d))
-    (+ (y-coord s) (y-coord d))))
+    (+ (square-x s) (delta-x d))
+    (+ (square-y s) (delta-y d))))
 
 (define knight-deltas
   (list
@@ -31,6 +26,4 @@
     (delta 2 1)))
 
 (define (moves-from s)
-  (map (lambda (d)
-    (apply-delta s d))
-       knight-deltas))
+  (map (curry apply-delta s) knight-deltas))

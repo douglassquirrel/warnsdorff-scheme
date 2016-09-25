@@ -8,7 +8,7 @@
 
 (define (new-diary width height)
   (define (to-index sq)
-    (+ (* width (y-coord sq)) (x-coord sq)))
+    (+ (* width (square-y sq)) (square-x sq)))
   (define visited-list
     (make-list (* width height) #f))
   (cons to-index visited-list))
@@ -46,8 +46,8 @@
 
 (define (inbounds? sq B)
   (and
-    (between? (x-coord sq) 0 (sub1 (width B)))
-    (between? (y-coord sq) 0 (sub1 (height B)))))
+    (between? (square-x sq) 0 (sub1 (width B)))
+    (between? (square-y sq) 0 (sub1 (height B)))))
 
 (define (visited? sq B)
   (visited-diary? sq (diary B)))
