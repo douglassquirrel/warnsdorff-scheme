@@ -1,10 +1,11 @@
 #lang racket/base
 
-(require racket/function)
+(require racket/function
+         racket/list)
 
 (provide add1 sub1 between?
          to-boolean
-         unfold in? first-match
+         unfold in? first-match argmin-all
          string->string-list)
 
 (define (add1 n) (+ n 1))
@@ -25,5 +26,9 @@
 (define in? (compose to-boolean member))
 
 (define first-match (compose car filter))
+
+(define (argmin-all p L)
+    (define min (p (argmin p L)))
+    (filter (lambda (x) (= (p x) min)) L))
 
 (define (string->string-list s) (map string (string->list s)))
