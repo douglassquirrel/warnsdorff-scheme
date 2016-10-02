@@ -1,15 +1,18 @@
 #lang racket/base
 
 (require racket/cmdline
+         racket/list
          racket/string
          "board.rkt"
          "knight.rkt"
          "square.rkt")
 
-(define size (command-line #:args (size) (string->number size)))
+(define args (command-line #:args args args))
+(define size (string->number (first args)))
+(define ordering (second args))
 
 (define B (new-board size size (square 0 0)))
-(define T (tour B))
+(define T (tour B ordering))
 
 (define num-squares (* size size))
 (displayln (string-join (map square-format T)))
