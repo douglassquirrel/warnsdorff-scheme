@@ -13,8 +13,9 @@
   (move-to (car (current-legal-moves B))))
 
 (define (move-warnsdorff B tiebreak)
+  (define sorted-moves (sort (current-legal-moves B) < #:key (curryr degree B)))
   (define min-degree-moves
-    (car (group-by (curryr degree B) (current-legal-moves B))))
+    (car (group-by (curryr degree B) sorted-moves)))
   (move-to (tiebreak min-degree-moves B) B))
 
 (define move-warnsdorff-simple
