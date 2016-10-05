@@ -3,7 +3,7 @@
 (require racket/function
          racket/list)
 
-(provide add1 sub1 between?
+(provide add1 sub1 between? equal-mod?
          to-boolean
          unfold in? first-match argmin-all
          string->string-list)
@@ -13,6 +13,8 @@
 
 (define (between? n low high)
   (and (>= n low) (<= n high)))
+
+(define (equal-mod? x y m) (= (modulo x m) (modulo y m)))
 
 (define (to-boolean x) (if x #t #f))
 
