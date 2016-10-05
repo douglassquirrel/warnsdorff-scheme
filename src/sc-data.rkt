@@ -1,11 +1,25 @@
 #lang racket/base
 
-(require racket/list
+(require racket/function
+         racket/list
+         "board.rkt"
          "square.rkt"
-         "squirrel-cull.rkt"
          "util.rkt")
 
 (provide make-sc-table sc-row-end? sc-row-square sc-row-tiebreak)
+
+(define (make-ordering-tiebreak ordering-string)
+  (define ordering-list
+    (map (compose sub1 string->number)
+         (string->string-list ordering-string)))
+  (define ordered-deltas
+    (map (curry list-ref knight-deltas) ordering-list))
+  (define (ordered-moves-from s)
+    (map (curry apply-delta s) ordered-deltas))
+
+  (lambda (moves B)
+    (first-match (curryr in? moves)
+                 (ordered-moves-from (current-square B)))))
 
 (struct sc-row (end? square tiebreak) #:transparent)
 

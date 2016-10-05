@@ -5,7 +5,8 @@
          "square.rkt"
          "util.rkt")
 
-(provide new-board current-square current-legal-moves degree move-to tour-over?)
+(provide new-board board-width current-square current-legal-moves
+         degree move-to tour-over? unvisited?)
 
 (struct board (width height current diary))
 (define current-square board-current)

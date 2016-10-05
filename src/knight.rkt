@@ -20,6 +20,6 @@
 (define move-warnsdorff-simple
   (curryr move-warnsdorff (lambda (moves B) (car moves))))
 
-(define (tour B ordering)
-  (define tiebreak (make-ordering-tiebreak ordering))
+(define (tour B)
+  (define tiebreak (make-sc-tiebreak (board-width B)))
   (unfold current-square (curryr move-warnsdorff tiebreak) B tour-over?))

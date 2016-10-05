@@ -2,20 +2,17 @@
 
 (require racket/function
          "board.rkt"
+         "sc-data.rkt"
          "square.rkt"
          "util.rkt")
 
-(provide make-ordering-tiebreak)
+(provide make-sc-tiebreak)
 
-(define (make-ordering-tiebreak ordering-string)
-  (define ordering-list
-    (map (compose sub1 string->number)
-         (string->string-list ordering-string)))
-  (define ordered-deltas
-    (map (curry list-ref knight-deltas) ordering-list))
-  (define (ordered-moves-from s)
-    (map (curry apply-delta s) ordered-deltas))
-
+(define (make-sc-tiebreak size)
+  (define sc-table (make-sc-table size))
+  (define (row-matches? row B)
+    (or (sc-row-end? row)
+        (unvisited? (sc-row-square row) B)))
   (lambda (moves B)
-    (first-match (curryr in? moves)
-                 (ordered-moves-from (current-square B)))))
+    (define matching-row (findf (curryr row-matches? B) sc-table))
+    ((sc-row-tiebreak matching-row) moves B)))
