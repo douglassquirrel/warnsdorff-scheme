@@ -17,8 +17,8 @@
 
 (define (inbounds? sq B)
   (and
-    (between? (square-x sq) 0 (sub1 (board-width B)))
-    (between? (square-y sq) 0 (sub1 (board-height B)))))
+    (between? (square-x sq) 1 (board-width B))
+    (between? (square-y sq) 1 (board-height B))))
 
 (define (visited? sq B)
   (visited-diary? sq (board-diary B)))

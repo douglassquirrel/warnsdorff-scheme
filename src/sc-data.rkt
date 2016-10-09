@@ -27,7 +27,7 @@
   (define tiebreak (make-ordering-tiebreak (fifth row)))
   (if (eq? (third row) 'end)
       (sc-row #t #f tiebreak)
-      (sc-row #f (square (sub1 (third row)) (sub1 (fourth row))) tiebreak)))
+      (sc-row #f (square (third row) (fourth row)) tiebreak)))
 
 (define (make-sc-table s)
   (map make-sc-row

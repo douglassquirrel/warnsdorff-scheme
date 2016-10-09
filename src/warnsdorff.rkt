@@ -11,7 +11,7 @@
 (define args (command-line #:args args args))
 (define size (string->number (first args)))
 
-(define B (new-board size size (square 0 0)))
+(define B (new-board size size (square 1 1)))
 (define T (tour B))
 
 (define num-squares (* size size))

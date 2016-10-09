@@ -1,7 +1,8 @@
 #lang racket/base
 
 (require racket/list
-         "square.rkt")
+         "square.rkt"
+         "util.rkt")
 
 (provide new-diary visit visited-diary?)
 
@@ -12,7 +13,7 @@
 
 (define (new-diary width height)
   (diary (lambda (sq) (+ (* width (square-y sq)) (square-x sq)))
-         (make-list (* width height) #f)))
+         (make-list (* (add1 width) (add1 height)) #f)))
 
 (define (visit sq D)
   (struct-copy diary D
