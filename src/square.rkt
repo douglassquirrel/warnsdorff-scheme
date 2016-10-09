@@ -18,14 +18,14 @@
 
 (define knight-deltas
   (list
-    (delta 1 -2)
-    (delta 2 -1)
-    (delta 2 1)
-    (delta 1 2)
-    (delta -1 2)
     (delta -2 1)
-    (delta -2 -1)
-    (delta -1 -2)))
+    (delta -1 2)
+    (delta 1 2)
+    (delta 2 1)
+    (delta 2 -1)
+    (delta 1 -2)
+    (delta -1 -2)
+    (delta -2 -1)))
 
 (define (moves-from s)
   (map (curry apply-delta s) knight-deltas))
