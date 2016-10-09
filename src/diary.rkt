@@ -6,18 +6,15 @@
 
 (provide new-diary visit visited-diary?)
 
-(struct diary (square-to-index visited-list))
-
-(define (index-of sq D) ((diary-square-to-index D) sq))
-(define visited-list diary-visited-list)
-
 (define (new-diary width height)
-  (diary (lambda (sq) (+ (* width (square-y sq)) (square-x sq)))
-         (make-list (* (add1 width) (add1 height)) #f)))
+  (make-list (add1 width) (make-list (add1 height) #f)))
 
-(define (visit sq D)
-  (struct-copy diary D
-               (visited-list (list-set (visited-list D) (index-of sq D) #t))))
+(define (visit sq diary)
+  (define x (square-x sq))
+  (define y (square-y sq))
+  (list-set diary x (list-set (list-ref diary x) y #t)))
 
-(define (visited-diary? sq D)
-  (list-ref (visited-list D) (index-of sq D)))
+(define (visited-diary? sq diary)
+  (define x (square-x sq))
+  (define y (square-y sq))
+  (list-ref (list-ref diary x) y))
