@@ -6,6 +6,7 @@
 (provide add1 sub1 between? equal-mod?
          to-boolean
          unfold in? first-match argmin-all
+         lookup
          string->string-list)
 
 (define (add1 n) (+ n 1))
@@ -32,5 +33,7 @@
 (define (argmin-all p L)
     (define min (p (argmin p L)))
     (filter (lambda (x) (= (p x) min)) L))
+
+(define lookup (compose cadr assoc))
 
 (define (string->string-list s) (map string (string->list s)))
