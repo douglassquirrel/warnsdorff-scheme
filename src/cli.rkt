@@ -5,8 +5,8 @@
 (provide get-cl-params)
 
 (define default-params
-  (hash 'print-tour #f
-        'tiebreak   'squirrel-cull))
+  (hash 'print-tour      #f
+        'tiebreak-method "squirrel-cull"))
 
 (define (get-cl-params)
   (define params (hash-copy default-params))
@@ -22,7 +22,7 @@
                               "'squirrel-cull' for the Squirrel-Cull method; or"
                               "a permutation of 12345678 for a fixed ordering."
                               "Squirrel-Cull is the default method.")
-        (hash-set! params 'tiebreak method))
+        (hash-set! params 'tiebreak-method method))
     #:args (size)
       (hash-set! params 'size (string->number size)))
   (hash->list params))

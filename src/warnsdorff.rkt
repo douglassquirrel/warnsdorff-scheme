@@ -5,17 +5,19 @@
          "board.rkt"
          "cli.rkt"
          "knight.rkt"
-         "square.rkt")
+         "square.rkt"
+         "tiebreak.rkt")
 
 (define cl-params (get-cl-params))
 (define size (dict-ref cl-params 'size))
-(define tiebreak (dict-ref cl-params 'tiebreak))
+(define tiebreak-method (dict-ref cl-params 'tiebreak-method))
 
 (printf "Computing tour on square board of size ~a using tiebreak ~a\n"
-        size tiebreak)
+        size tiebreak-method)
 
 (define B (new-board size size (square 1 1)))
-(define T (tour B))
+(define tiebreak (make-tiebreak tiebreak-method size))
+(define T (tour B tiebreak))
 
 (if (dict-ref cl-params 'print-tour)
   (displayln (string-join (map square-format T)))

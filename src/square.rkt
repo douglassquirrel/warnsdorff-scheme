@@ -3,7 +3,7 @@
 (require racket/function)
 
 (provide square delta
-         apply-delta knight-deltas moves-from
+         apply-delta distance knight-deltas moves-from
          square-format square-x square-y)
 
 (struct square (x y) #:transparent)
@@ -29,3 +29,8 @@
 
 (define (moves-from s)
   (map (curry apply-delta s) knight-deltas))
+
+(define (square-num x) (* x x))
+(define (distance a b)
+  (+ (square-num (- (square-x a) (square-x b)))
+     (square-num (- (square-y a) (square-y b)))))
