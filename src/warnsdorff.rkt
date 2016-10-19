@@ -15,7 +15,9 @@
 (define T (tour B))
 
 (define num-squares (* size size))
-(displayln (string-join (map square-format T)))
+(if (dict-ref cl-params 'print-tour)
+  (displayln (string-join (map square-format T)))
+  (void))
 (if (= (length T) num-squares)
   (printf "Successfully visited all ~a squares.\n" num-squares)
   (printf "Failed - visited only ~a of ~a squares.\n" (length T) num-squares))
