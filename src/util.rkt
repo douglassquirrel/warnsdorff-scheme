@@ -31,8 +31,11 @@
 (define first-match (compose car filter))
 
 (define (argmin-all p L)
-    (define min (p (argmin p L)))
-    (filter (lambda (x) (= (p x) min)) L))
+  (define min
+    (if (empty? L)
+      0
+      (p (argmin p L))))
+  (filter (lambda (x) (= (p x) min)) L))
 
 (define lookup (compose cadr assoc))
 
